@@ -81,7 +81,7 @@ def add_to_cart(user_id, product_id):
     desired_quantity = int(desired_quantity_json['quantity'])
 
     # Query the product service
-    product = requests.get(f'http://127.0.0.1:5001/products/{product_id}')
+    product = requests.get(f'http://jhayes-cmsc455-productservice.onrender.com/products/{product_id}')
     data = product.json()
     if 'error' in data:
         return data
@@ -90,7 +90,7 @@ def add_to_cart(user_id, product_id):
     if (quantity < desired_quantity):
         return jsonify({"error": "Desired product quanity exceeds stock limit"}), 416
 
-    quantity_modified = requests.post(f'http://127.0.0.1:5001/products/update/quantity/{product_id}', json=desired_quantity_json)
+    quantity_modified = requests.post(f'http://jhayes-cmsc455-productservice.onrender.com/products/update/quantity/{product_id}', json=desired_quantity_json)
     if ('error' in quantity_modified):
         return quantity_modified.json()
 
@@ -152,5 +152,5 @@ def remove_from_cart(user_id, product_id):
 
 
 if __name__ == "__main__":
-    db.create_all()
+    # db.create_all()
     app.run(debug=True)
